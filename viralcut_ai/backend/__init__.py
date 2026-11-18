@@ -1,1 +1,0 @@
-"""VIRALCUT AI backend package."""
