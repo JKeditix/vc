@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VIRALCUT AI — Automated Shorts & Reels Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        studio: {
+                            bg: '#070b14',
+                            panel: '#0e1525',
+                            border: '#1e293b',
+                            accent: '#6366f1',
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-[#070b14] text-slate-100 antialiased selection:bg-indigo-500/40">
+    <div id="root">
+        <div class="min-h-screen flex items-center justify-center text-sm text-slate-400">
+            Loading VIRALCUT AI Studio...
+        </div>
+    </div>
+
+    <script src="/static/js/api.js"></script>
+    <script>
+        (async function bootstrapViralCut() {
+            const modules = [
+                '/static/js/components/Header.jsx',
+                '/static/js/components/InputPanel.jsx',
+                '/static/js/components/ProgressCard.jsx',
+                '/static/js/components/ClipCard.jsx',
+                '/static/js/components/ClipEditorModal.jsx',
+                '/static/js/components/SettingsModal.jsx',
+                '/static/js/app.jsx',
+            ];
+            try {
+                for (const url of modules) {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
+                    const source = await res.text();
+                    const compiled = Babel.transform(source, {
+                        presets: [['react', { runtime: 'classic' }]],
+                        filename: url,
+                    }).code;
+                    const script = document.createElement('script');
+                    script.text = compiled;
+                    document.body.appendChild(script);
+                }
+            } catch (err) {
+                console.error('VIRALCUT AI bootstrap error:', err);
+                const root = document.getElementById('root');
+                if (root) {
+                    root.innerHTML = `<div style="padding:2rem;color:#fca5a5;font-family:monospace">Failed to load dashboard: ${err.message}</div>`;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

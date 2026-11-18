@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.env
+viralcut.db
+viralcut.db-shm
+viralcut.db-wal
+viralcut.db-journal
+viralcut_storage/uploads/*
+viralcut_storage/audio/*
+viralcut_storage/clips/*
+viralcut_storage/subtitles/*
+viralcut_storage/thumbnails/*
